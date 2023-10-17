@@ -1,15 +1,25 @@
-import { Web3Storage, getFilesFromPath } from "./node_modules/web3.storage";
+import { Web3Storage, getFilesFromPath } from "web3.storage";
+import { Blob } from "web3.storage";
 
+const token =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDExZEJiNjEwNDczMURlRjBDMzExNGJmMDgxNTY1OUJCNGVlYWJEZjYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2OTM1MzY0MTg2ODksIm5hbWUiOiJ0ayJ9.sgDYwWqF4cg2RTSnhu7JtA_8U9NFPwMwWz4cLDpKorg";
 const showFile = async function (e) {
   e.preventDefault();
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDExZEJiNjEwNDczMURlRjBDMzExNGJmMDgxNTY1OUJCNGVlYWJEZjYiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2OTM1MzY0MTg2ODksIm5hbWUiOiJ0ayJ9.sgDYwWqF4cg2RTSnhu7JtA_8U9NFPwMwWz4cLDpKorg";
   const fileObj = document.getElementById("inp");
-  let file = fileObj.files[0];
+  const displayImage = document.getElementById("displayImage");
+
+  let file = await fileObj.files[0];
+  console.log(e.target.result);
+  console.log(file);
+
+  // const files = [new Blob([file], { type: file.type })];
+  console.log(fileObj.files);
   const client = new Web3Storage({ token });
   // const files = await getFilesFromPath('/path/to/file')
-  const cid = await client.put(file);
+  const cid = await client.put(fileObj.files);
   console.log(cid);
+  var divElement = document.getElementById("myDiv");
+  divElement.textContent = cid;
 
   // const ipfs = await window.IpfsCore.create();
 
@@ -20,21 +30,39 @@ const showFile = async function (e) {
   // sessionStorage.setItem("hash", path);
 };
 
-const render = async function (hash) {
-  loader.style.visibility = "visible";
+const render = async function () {
+  // loader.style.visibility = "visible";
 
-  console.log(hash);
-  const link = "https://gateway.ipfs.io/ipfs/" + hash;
+  // console.log(hash);
+  const client = new Web3Storage({ token });
 
+  const cid = document.getElementById("hash").value;
+  console.log(cid);
+
+  const res = await client.get(cid);
+  const files = await res.files();
+  console.log(files);
   //converting tif to jpg
-  // let convertApi = ConvertApi.auth("sIr2qqA06vIeCkGC");
-  // let params = convertApi.createParams();
-  // params.add("file", new URL(link));
-  // let result = await convertApi.convert("tif", "jpg", params);
+
+  const selectedFile = files[0]; // Use the file variable
+  console.log(selectedFile);
+  if (selectedFile) {
+    // Create a FileReader object
+    const reader = new FileReader();
+
+    // Define an event handler for when the file is loaded
+    reader.onload = (e) => {
+      // Set the src attribute of the img element to the data URL of the loaded image
+      displayImage.src = e.target.result;
+    };
+
+    // Read the selected file as a data URL
+    reader.readAsDataURL(selectedFile);
+  }
 
   //adding image to frontend
-  const img = document.createElement("img");
-  container.appendChild(img);
+  // const img = document.createElement("img");
+  // container.appendChild(img);
   // console.log(result);
   // const {
   //   dto: { Files },
@@ -42,8 +70,8 @@ const render = async function (hash) {
   // const [obj] = Files;
   // const { Url } = obj;
   // console.log(Url);
-  img.src = link;
-  loader.style.visibility = "hidden";
+  // img.src = link;
+  // loader.style.visibility = "hidden";
 };
 
 //enroll hyperledger users
@@ -179,7 +207,7 @@ const submit = document.getElementById("submit");
 submit.addEventListener("click", query);
 
 const display = document.getElementById("display");
-display.addEventListener("click", retreiveFromHyperledger);
+display.addEventListener("click", render);
 
 const loader = document.getElementById("loader");
 const container = document.querySelector(".img-container");

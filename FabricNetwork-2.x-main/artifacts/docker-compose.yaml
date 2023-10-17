@@ -27,9 +27,9 @@ services:
       - ORDERER_METRICS_PROVIDER=prometheus
       - ORDERER_OPERATIONS_LISTENADDRESS=0.0.0.0:8443
       - ORDERER_GENERAL_LISTENPORT=7050
-      # - ORDERER_GENERAL_TLS_TLSHANDSHAKETIMESHIFT=200h
-      # - ORDERER_GENERAL_CLUSTER_TLSHANDSHAKETIMESHIFT=200h
-      # - ORDERER_GENERAL_AUTHENTICATION_NOEXPIRATIONCHECKS=true
+      - ORDERER_GENERAL_TLS_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_CLUSTER_TLSHANDSHAKETIMESHIFT=200h
+      - ORDERER_GENERAL_AUTHENTICATION_NOEXPIRATIONCHECKS=true
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/orderers
     command: orderer
     ports:
@@ -200,7 +200,6 @@ services:
       # - ./channel/:/etc/hyperledger/channel/
     networks:
       - test
-
 
   peer0.org2.example.com:
     container_name: peer0.org2.example.com

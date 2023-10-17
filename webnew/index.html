@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Decentralised Image Solutions</title>
+    <title>
+      Image Dehazing and Decentralised Tokenization using Hyperleadger
+    </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="index.css" />
     <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.28.0/dist/tsparticles.min.js"></script>
@@ -26,7 +28,7 @@
         <h1
           class="text-center pt-16 text-4xl font-bold tracking-tight leading-none text-white md:text-5xl lg:text-4xl dark:text-white text-up ml-4"
         >
-          WEB3 Decentralised Storage Solutions
+          Image Dehazing and Decentralised Tokenization using Hyperleadger
         </h1>
       </div>
       <div class="waterfall" id="loader">
@@ -44,23 +46,30 @@
           class="button-new bg-white"
           value="Upload an Image"
         />
-        />
+
         <input
           type="button"
           id="submit"
           class="button-new bg-white"
           value="Submit Query"
         />
+      </div>
+      <div class="z-10 flex items-center justify-center my-16">
+        <div id="myDiv" class="button-new bg-white">HashValue</div>
+      </div>
+      <div class="z-10 flex items-center justify-center mt-96 space-x-8">
+        <input type="text" id="hash" class="button-new bg-white" />
         <input
           type="button"
           id="display"
           class="button-new bg-white"
           value="Display Query"
         />
-        />
       </div>
       <div class="z-20">
-        <div class="img-container grid grid-cols-2 gap-4 ml-52 pb-24"></div>
+        <div class="img-container grid grid-cols-2 gap-4 ml-52">
+          <img id="displayImage" src="" alt="Selected Image" />
+        </div>
       </div>
     </div>
 

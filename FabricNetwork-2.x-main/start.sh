@@ -1,4 +1,4 @@
-cd /mnt/d/test4/FabricNetwork-2.x-main/FabricNetwork-2.x-main/artifacts/channel/create-certificate-with-ca
+cd ./artifacts/channel/create-certificate-with-ca
 docker-compose up -d
 
 cd ..
